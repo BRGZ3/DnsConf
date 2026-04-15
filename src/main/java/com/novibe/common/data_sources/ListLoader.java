@@ -1,5 +1,6 @@
 package com.novibe.common.data_sources;
 
+import com.novibe.common.util.DataParser;
 import com.novibe.common.util.Log;
 import lombok.Cleanup;
 import lombok.Setter;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.StructuredTaskScope;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Setter(onMethod_ = @Autowired)
@@ -41,7 +41,7 @@ public abstract class ListLoader<T> {
         return requests.stream()
                 .map(StructuredTaskScope.Subtask::get)
                 .map(String::stripIndent)
-                .flatMap(s -> Pattern.compile("\\r?\\n").splitAsStream(s))
+                .flatMap(DataParser::splitByEol)
                 .parallel()
                 .filter(line -> !line.isBlank())
                 .filter(line -> !line.startsWith("#"))
@@ -59,13 +59,6 @@ public abstract class ListLoader<T> {
                 .GET()
                 .build();
         return client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8)).body();
-    }
-
-    protected String removeWWW(String domain) {
-        if (domain.startsWith("www.")) {
-            return domain.substring("www.".length());
-        }
-        return domain;
     }
 
 }

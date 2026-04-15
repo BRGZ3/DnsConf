@@ -1,5 +1,6 @@
 package com.novibe.common.data_sources;
 
+import com.novibe.common.util.DataParser;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Predicate;

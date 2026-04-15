@@ -1,5 +1,6 @@
 package com.novibe.common.data_sources;
 
+import com.novibe.common.util.DataParser;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Predicate;
@@ -7,7 +8,7 @@ import java.util.function.Predicate;
 @Service
 public class HostsBlockListsLoader extends ListLoader<String> {
 
-    private static final String[] BLOCK_PREFIXES = { "0.0.0.0 ", "127.0.0.1 ", "::1 "};
+    private static final String[] BLOCK_PREFIXES = {"0.0.0.0 ", "127.0.0.1 ", "::1 "};
     private static final String[] LOCALHOST_NAME = {"localhost", "ip6-localhost"};
 
     @Override
@@ -22,7 +23,7 @@ public class HostsBlockListsLoader extends ListLoader<String> {
 
     @Override
     protected String toObject(String line) {
-        return removeWWW(removeIp(line));
+        return DataParser.removeWWW(removeIp(line));
     }
 
     public static boolean isBlock(String line) {

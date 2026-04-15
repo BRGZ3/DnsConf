@@ -16,10 +16,12 @@ public class EnvironmentVariables {
 
     public static final String REDIRECT = System.getenv("REDIRECT");
 
+    public static final String EXCLUDE_REDIRECT = System.getenv("EXCLUDE_REDIRECT");
+
     private static String extractMandatoryVariable(String key) {
         String env = System.getenv(key);
         if (isNull(env) || env.isBlank()) {
-            Log.fail("Не обнаружена обязательная переменная среды: " + key);
+            Log.fail("Mandatory environment variable is not provided: " + key);
             System.exit(1);
         }
         return env;
