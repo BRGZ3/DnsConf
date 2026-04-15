@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+  runs:
+  using: node24
+  main: dist/index.js
   
 jobs:
   build:
